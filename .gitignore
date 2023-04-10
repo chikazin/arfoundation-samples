@@ -45,3 +45,4 @@ sysinfo.txt
 *.unitypackage
 
 .DS_Store
+Android_build_BackUpThisFolder_ButDontShipItWithYourGame/
