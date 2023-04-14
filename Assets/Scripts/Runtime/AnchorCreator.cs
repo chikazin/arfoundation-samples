@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.XR.CoreUtils;
 using UnityEngine.InputSystem;
 using UnityEngine.XR.ARSubsystems;
@@ -66,7 +67,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     {
                         var oldPrefab = m_AnchorManager.anchorPrefab;
                         m_AnchorManager.anchorPrefab = m_Prefab;
-                        anchor = m_AnchorManager.AttachAnchor(plane, hit.pose);
+                        anchor = m_AnchorManager.AttachAnchor(plane, new Pose(hit.pose.position, m_Prefab.transform.rotation));
                         m_AnchorManager.anchorPrefab = oldPrefab;
                     }
                     else
@@ -85,7 +86,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (m_Prefab != null)
             {
                 // Note: the anchor can be anywhere in the scene hierarchy
-                var gameObject = Instantiate(m_Prefab, hit.pose.position, hit.pose.rotation);
+                var gameObject = Instantiate(m_Prefab, hit.pose.position, m_Prefab.transform.rotation);
 
                 // Make sure the new GameObject has an ARAnchor component
                 anchor = ComponentUtils.GetOrAddIf<ARAnchor>(gameObject, true);
