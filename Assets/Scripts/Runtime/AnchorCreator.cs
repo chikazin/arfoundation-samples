@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Unity.XR.CoreUtils;
-using UnityEngine.InputSystem;
+using UnityEngine.Android;
+using UnityEngine.UI;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -32,6 +33,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
         protected override void Awake()
         {
             base.Awake();
+
+            Input.location.Start(1f, 0.1f);
+            if (!CheckLocationPermission())
+            {
+                Logger.Log("Location Permission Missing!");
+            }
+
             m_RaycastManager = GetComponent<ARRaycastManager>();
             m_AnchorManager = GetComponent<ARAnchorManager>();
 
@@ -102,6 +110,65 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             return anchor;
         }
+
+        internal void permissionGranted(string permissionName)
+        {
+            Logger.Log($"{permissionName} granted!");
+            Input.location.Start(1f, 0.1f);
+        }
+        internal void permissionDeny(string permissionName){
+            Logger.Log($"{permissionName} denied");
+        }
+        internal void permissionDenyAskAgain(string permissionName){
+            Logger.Log($"{permissionName} denyAskAgain");
+        }
+        private bool CheckLocationPermission()
+        {
+            if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
+            {
+                var callbacks = new PermissionCallbacks();
+                callbacks.PermissionGranted += permissionGranted;
+                callbacks.PermissionDenied += permissionDeny;
+                callbacks.PermissionDeniedAndDontAskAgain += permissionDenyAskAgain;
+                Permission.RequestUserPermission(Permission.FineLocation, callbacks);
+                return false;
+            }
+
+            return true;
+        }
+        
+        private long lastTimestamp = 0;
+        private float totalTime = 0;
+        private String activeStatus = "offline";
+        private void Update()
+        {
+            totalTime += Time.deltaTime;
+            if (!CheckLocationPermission())
+            {
+                Logger.Log("Location Permission Missing!");
+            } else {
+                var curTimestamp= (long)Input.location.lastData.timestamp;
+                DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(curTimestamp);
+                DateTime dateTime = dateTimeOffset.LocalDateTime;
+                if(totalTime >= 1)
+                {
+                    bool isActive = lastTimestamp != curTimestamp;
+                    locationInfoText.color = isActive ? new Color(255, 255, 255) : new Color(255, 0, 0);
+                    activeStatus = isActive ? "active" : "offline";
+                    lastTimestamp = curTimestamp;
+                    totalTime = 0;
+                }
+
+                locationInfoText.text = $"Location status:  {Input.location.status} ({activeStatus})\n" +
+                    $"latitude: {Input.location.lastData.latitude} \n" +
+                    $"longitude: {Input.location.lastData.longitude} \n" +
+                    $"altitude: {Input.location.lastData.altitude} \n" +
+                    $"horizontalAccuracy: {Input.location.lastData.horizontalAccuracy} \n" +
+                    $"verticalAccuracy: {Input.location.lastData.verticalAccuracy} \n" +
+                    $"timestamp: {dateTime:yyyy-MM-dd HH:mm:ss}";
+            }
+        }
+        public Text locationInfoText;
 
         protected override void OnPress(Vector3 position)
         {
