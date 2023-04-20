@@ -48,6 +48,18 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 enabled = false;
                 Debug.LogWarning($"No active XRAnchorSubsystem is available, so {typeof(AnchorCreator).FullName} will not be enabled.");
             }
+
+            // 1s后初始化消防栓
+            Invoke(nameof(InitFireHydrant), 1f);
+
+        }
+
+        public void InitFireHydrant()
+        {
+            // 以相机初始点作为坐标原点，y偏移1.3m，z偏移2.5m，生成一个消防栓
+            var gameObject = Instantiate(m_Prefab, new Vector3(0, -1.3f, 2.5f), m_Prefab.transform.rotation);
+            ARAnchor anchor = ComponentUtils.GetOrAddIf<ARAnchor>(gameObject, true);
+            m_Anchors.Add(anchor);
         }
 
         void SetAnchorText(ARAnchor anchor, string text)
