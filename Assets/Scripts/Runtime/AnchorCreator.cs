@@ -53,7 +53,42 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Invoke(nameof(InitFireHydrant), 1f);
 
         }
+        // 设置两个坐标，用于计算Unity坐标使用
+        public LocationInfo origin;
+        public LocationInfo target;
+        public Text originGPSText;
+        public Text targetGPSText;
 
+        public void SetGPSInfo(String type)
+        {
+            switch (type)
+            {
+                case "origin":
+                    origin = Input.location.lastData;
+                    originGPSText.text = $"latitude: {origin.latitude}\n" +
+                        $"longitude: {origin.longitude}\n" +
+                        $"altitude: {origin.altitude}\n";
+                    break;
+                case "target":
+                    target = Input.location.lastData;
+                    targetGPSText.text = $"latitude: {target.latitude}\n" +
+                        $"longitude: {target.longitude}\n" +
+                        $"altitude: {target.altitude}\n";
+                    UnityCoord result = gameObject.GetComponent<GPS2UnityCoord>().CalcUnityCoord(origin, target);
+                    // 在终点位置放置消防栓
+                    InitFireHydrant(new Vector3(result.X, result.Y, result.Z));
+                    break;
+            }
+        }
+
+        public void InitFireHydrant(Vector3 position)
+        {
+            var gameObject = Instantiate(m_Prefab, position, m_Prefab.transform.rotation);
+            ARAnchor anchor = ComponentUtils.GetOrAddIf<ARAnchor>(gameObject, true);
+            m_Anchors.Add(anchor);
+
+            targetGPSText.text += $"{Math.Round(position.x, 2)}, {Math.Round(position.y, 2)}, {Math.Round(position.z, 2)} has been put an fireHydrant！";
+        }
         public void InitFireHydrant()
         {
             // 以相机初始点作为坐标原点，y偏移1.3m，z偏移2.5m，生成一个消防栓
@@ -128,10 +163,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
             Logger.Log($"{permissionName} granted!");
             Input.location.Start(1f, 0.1f);
         }
-        internal void permissionDeny(string permissionName){
+        internal void permissionDeny(string permissionName)
+        {
             Logger.Log($"{permissionName} denied");
         }
-        internal void permissionDenyAskAgain(string permissionName){
+        internal void permissionDenyAskAgain(string permissionName)
+        {
             Logger.Log($"{permissionName} denyAskAgain");
         }
         private bool CheckLocationPermission()
@@ -148,7 +185,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
             return true;
         }
-        
+
         private long lastTimestamp = 0;
         private float totalTime = 0;
         private String activeStatus = "offline";
@@ -158,11 +195,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (!CheckLocationPermission())
             {
                 Logger.Log("Location Permission Missing!");
-            } else {
-                var curTimestamp= (long)Input.location.lastData.timestamp;
+            }
+            else
+            {
+                var curTimestamp = (long)Input.location.lastData.timestamp;
                 DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(curTimestamp);
                 DateTime dateTime = dateTimeOffset.LocalDateTime;
-                if(totalTime >= 1)
+                if (totalTime >= 1)
                 {
                     bool isActive = lastTimestamp != curTimestamp;
                     locationInfoText.color = isActive ? new Color(255, 255, 255) : new Color(255, 0, 0);
@@ -184,6 +223,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         protected override void OnPress(Vector3 position)
         {
+            // 关闭点击生成锚点
+            return;
+
             // Raycast against planes and feature points
             const TrackableType trackableTypes =
                 TrackableType.FeaturePoint |
