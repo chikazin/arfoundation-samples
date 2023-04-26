@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.XR.CoreUtils;
 using UnityEngine.Android;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using UnityEngine.XR.ARSubsystems;
 
 namespace UnityEngine.XR.ARFoundation.Samples
@@ -13,6 +15,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
     {
         [SerializeField]
         GameObject m_Prefab;
+
+        public GameObject pipe;
 
         public GameObject prefab
         {
@@ -50,7 +54,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             // 1s后初始化消防栓
-            Invoke(nameof(InitFireHydrant), 1f);
+            // Invoke(nameof(InitFireHydrant), 1f);
 
         }
         // 设置两个坐标，用于计算Unity坐标使用
@@ -64,21 +68,77 @@ namespace UnityEngine.XR.ARFoundation.Samples
             switch (type)
             {
                 case "origin":
-                    origin = Input.location.lastData;
+                    origin = new LocationInfo
+                    {
+                        latitude = Input.location.lastData.latitude,
+                        longitude = Input.location.lastData.longitude,
+                        altitude = Input.location.lastData.altitude
+                    };
                     originGPSText.text = $"latitude: {origin.latitude}\n" +
                         $"longitude: {origin.longitude}\n" +
                         $"altitude: {origin.altitude}\n";
                     break;
                 case "target":
-                    target = Input.location.lastData;
+                    target = new LocationInfo
+                    {
+                        latitude = Input.location.lastData.latitude,
+                        longitude = Input.location.lastData.longitude,
+                        altitude = Input.location.lastData.altitude
+                    };
                     targetGPSText.text = $"latitude: {target.latitude}\n" +
                         $"longitude: {target.longitude}\n" +
                         $"altitude: {target.altitude}\n";
+
+                    // 院后门3个井盖的坐标
+                    LocationInfo[] ptArr = new LocationInfo[]
+                    {
+                        new()
+                        {
+                            latitude = 30.29678046f,
+                            longitude = 120.0894358f,
+                            altitude = 12.905f
+
+                        },
+                        new()
+                        {
+                            latitude = 30.29677005f,
+                            longitude = 120.0894966f,
+                            altitude = 12.905f
+
+                        },
+                        new()
+                        {
+                           latitude = 30.29678294f,
+                            longitude = 120.0895334f,
+                            altitude = 12.9499f
+                        }
+                    };
+
+
+
                     UnityCoord result = gameObject.GetComponent<GPS2UnityCoord>().CalcUnityCoord(origin, target);
-                    // 在终点位置放置消防栓
                     InitFireHydrant(new Vector3(result.X, result.Y, result.Z));
+                    targetGPSText.text += $"target put!\n";
+
+
+                    int index = 0;
+                    foreach (LocationInfo pt in ptArr)
+                    {
+                        UnityCoord pt0Result = gameObject.GetComponent<GPS2UnityCoord>().CalcUnityCoord(origin, pt);
+                        InitFireHydrant(new Vector3(pt0Result.X, pt0Result.Y, pt0Result.Z));
+                        targetGPSText.text += $"p{index}: {pt0Result.X},{pt0Result.Y},{pt0Result.Z}put!\n";
+                        index++;
+                    }
                     break;
             }
+        }
+
+        public void PutPipe(Vector3 position)
+        {
+            var gameObject = Instantiate(pipe, position, m_Prefab.transform.rotation);
+            ARAnchor anchor = ComponentUtils.GetOrAddIf<ARAnchor>(gameObject, true);
+            m_Anchors.Add(anchor);
+            targetGPSText.text += $"{Math.Round(position.x, 2)}, {Math.Round(position.y, 2)}, {Math.Round(position.z, 2)} has been put an fireHydrant！";
         }
 
         public void InitFireHydrant(Vector3 position)

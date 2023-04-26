@@ -12,7 +12,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             return Math.PI / 180 * degree;
         }
 
-        public UnityCoord CalcUnityCoord(LocationInfo origin, LocationInfo obj)
+        public UnityCoord CalcUnityCoord( LocationInfo origin,LocationInfo obj)
         {
 
             double p_la = origin.latitude;
@@ -58,5 +58,12 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public float Y { get; set; }
         public float Z { get; set; }
 
+    }
+
+    public struct LocationInfo
+    {
+        public double latitude { get; set; }
+        public double longitude { get; set; }
+        public double altitude { get; set; }
     }
 }
