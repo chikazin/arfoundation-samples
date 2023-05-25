@@ -45,4 +45,6 @@ sysinfo.txt
 *.unitypackage
 
 .DS_Store
-Android_build_BackUpThisFolder_ButDontShipItWithYourGame/
+
+# 忽略build过程文件，将build的apk名字设置为：ar-sample时
+ar-sample_BackUpThisFolder_ButDontShipItWithYourGame/
