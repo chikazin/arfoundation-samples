@@ -54,7 +54,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
 
             // 1s后初始化消防栓
-            // Invoke(nameof(InitFireHydrant), 1f);
+            Invoke(nameof(InitFireHydrant), 1f);
 
         }
         // 设置两个坐标，用于计算Unity坐标使用
