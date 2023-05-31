@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
@@ -29,3 +31,5 @@ public class UserInterface : EditorWindow
         root.Add(labelFromUXML);
     }
 }
+
+#endif
