@@ -1,13 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Scenes/ARInspection/userInterface/UserInterface.uss?fileID=7433441132597879392&amp;guid=396516e8339da89459508eb0c12883cd&amp;type=3#UserInterface" />
-    <ui:GroupBox class="mainbox">
+    <ui:GroupBox name="GroupBox" class="mainbox" style="-unity-font: initial; -unity-font-definition: url(&apos;project://database/Assets/Scenes/ARInspection/userInterface/SourceHanSerifSC-Regular%20SDF.asset?fileID=11400000&amp;guid=d5422eab7c3cd814e94d09ad2ae23d17&amp;type=2#SourceHanSerifSC-Regular SDF&apos;);">
         <ui:GroupBox name="object-info" class="object-info">
-            <ui:TextField picking-mode="Ignore" label="id：" name="id" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="名称：" name="名称" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="所属单位：" name="所属单位" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="长度：" name="长度" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="起点坐标：" name="起点坐标" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="终点坐标：" name="终点坐标" class="info-item" />
+            <ui:TextField picking-mode="Ignore" label="id：" name="id" readonly="true" class="info-item" />
+            <ui:TextField picking-mode="Ignore" label="名称：" name="名称" readonly="true" class="info-item" />
+            <ui:TextField picking-mode="Ignore" label="所属单位：" name="所属单位" readonly="true" class="info-item" />
+            <ui:TextField picking-mode="Ignore" label="长度：" name="长度" readonly="true" class="info-item" />
+            <ui:TextField picking-mode="Ignore" label="起点坐标：" name="起点坐标" readonly="true" class="info-item" />
+            <ui:TextField picking-mode="Ignore" label="终点坐标：" name="终点坐标" readonly="true" class="info-item" />
         </ui:GroupBox>
     </ui:GroupBox>
 </ui:UXML>
