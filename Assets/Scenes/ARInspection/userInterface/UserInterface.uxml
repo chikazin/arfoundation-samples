@@ -10,4 +10,7 @@
             <ui:TextField picking-mode="Ignore" label="终点坐标：" name="终点坐标" readonly="true" class="info-item" />
         </ui:GroupBox>
     </ui:GroupBox>
+    <ui:GroupBox style="align-items: center; top: 600px; font-size: 36px; -unity-font-definition: url(&apos;project://database/Assets/Scenes/ARInspection/userInterface/SourceHanSerifSC-Regular%20SDF.asset?fileID=11400000&amp;guid=d5422eab7c3cd814e94d09ad2ae23d17&amp;type=2#SourceHanSerifSC-Regular SDF&apos;);">
+        <ui:Button text="设置id为10086" display-tooltip-when-elided="true" name="SetValueBtn" style="height: 131px; width: 331px; background-color: rgb(255, 255, 255);" />
+    </ui:GroupBox>
 </ui:UXML>
