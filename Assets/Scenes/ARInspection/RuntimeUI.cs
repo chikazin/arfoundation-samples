@@ -7,24 +7,25 @@ using UnityEngine.UIElements;
 public class RuntimeUI : MonoBehaviour
 {
     private TextField idTextField;
-    private Button setValueBtn;
     private UIDocument document;
+    private GroupBox groupBox;
+
     void Start()
     {
         document = GetComponent<UIDocument>();
-        SetId("abcd");
-        setValueBtn = document.rootVisualElement.Q("SetValueBtn") as Button;
-        setValueBtn.RegisterCallback<ClickEvent>(OnBtnClick);
+        groupBox = document.rootVisualElement.Q("GroupBox") as GroupBox;
+        HideInfobox();
     }
 
     public void SetId(string str)
     {
         idTextField = document.rootVisualElement.Q("id") as TextField;
         idTextField.value = $"{str}";
+        groupBox.style.display = DisplayStyle.Flex;
     }
 
-    void OnBtnClick (ClickEvent evt)
+    public void HideInfobox()
     {
-        SetId("10086");
+        groupBox.style.display = DisplayStyle.None;
     }
 }
