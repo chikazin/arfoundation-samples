@@ -23,25 +23,22 @@ public class ShowObjectInfo : MonoBehaviour
                 Transform target = hitInfo.transform;
                 if (target != null)
                 {
+                    // éšè—ä¸Šä¸€æ¬¡ç‚¹å‡»çš„GameObjectï¼ˆå¦‚æœæœ‰ï¼‰çš„Outline
+                    HideOutline();
                     lastClickObj = target.gameObject;
-                    // Ñ¡ÖĞÎïÌåºóÏÔÊ¾ÎïÌåµÄĞÅÏ¢µ½UI¿òÖĞ
+                    // é€‰ä¸­ç‰©ä½“åæ˜¾ç¤ºç‰©ä½“çš„ä¿¡æ¯åˆ°UIæ¡†ä¸­
                     ShowObjInfo(target.gameObject);
-                    // ÏÔÊ¾±ß¿ò
+                    // æ˜¾ç¤ºè¾¹æ¡†
                     ShowOutline(target.gameObject);
                 }
             }
             else
             {
-                // Òş²ØÎïÌåĞÅÏ¢¿ò
+                // éšè—ç‰©ä½“ä¿¡æ¯æ¡†
                 HideObjInfo();
-                // Òş²ØÉÏÒ»´Îµã»÷µÄGameObjectµÄOutline
-                if (lastClickObj)
-                {
-                    if (lastClickObj.TryGetComponent<Outline>(out Outline outline))
-                    {
-                        outline.enabled = false;
-                    }
-                }
+                // éšè—ä¸Šä¸€æ¬¡ç‚¹å‡»çš„GameObjectï¼ˆå¦‚æœæœ‰ï¼‰çš„Outline
+                HideOutline();
+
 
             }
         }
@@ -59,6 +56,17 @@ public class ShowObjectInfo : MonoBehaviour
             gameObject.AddComponent<Outline>();
             gameObject.GetComponent<Outline>().OutlineColor = Color.red;
             gameObject.GetComponent<Outline>().enabled = true;
+        }
+    }
+
+    void HideOutline()
+    {
+        if (lastClickObj)
+        {
+            if (lastClickObj.TryGetComponent<Outline>(out Outline outline))
+            {
+                outline.enabled = false;
+            }
         }
     }
 
