@@ -9,11 +9,14 @@ public class RuntimeUI : MonoBehaviour
     private TextField idTextField;
     private UIDocument document;
     private GroupBox groupBox;
+    // 是否允许Gizmo调整
+    private Toggle isEditToggle;
 
     void Start()
     {
         document = GetComponent<UIDocument>();
         groupBox = document.rootVisualElement.Q("GroupBox") as GroupBox;
+        isEditToggle = document.rootVisualElement.Q("isEdit") as Toggle;
         HideInfobox();
     }
 
@@ -27,5 +30,10 @@ public class RuntimeUI : MonoBehaviour
     public void HideInfobox()
     {
         groupBox.style.display = DisplayStyle.None;
+    }
+
+    public bool IsEdit()
+    {
+        return isEditToggle.value;
     }
 }

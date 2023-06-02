@@ -1,13 +1,18 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Scenes/ARInspection/userInterface/UserInterface.uss?fileID=7433441132597879392&amp;guid=396516e8339da89459508eb0c12883cd&amp;type=3#UserInterface" />
-    <ui:GroupBox name="GroupBox" class="mainbox" style="-unity-font: initial; -unity-font-definition: url(&apos;project://database/Assets/Scenes/ARInspection/userInterface/SourceHanSerifSC-Regular%20SDF.asset?fileID=11400000&amp;guid=d5422eab7c3cd814e94d09ad2ae23d17&amp;type=2#SourceHanSerifSC-Regular SDF&apos;); display: none;">
-        <ui:GroupBox name="object-info" class="object-info">
-            <ui:TextField picking-mode="Ignore" label="id：" name="id" readonly="true" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="名称：" name="名称" readonly="true" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="所属单位：" name="所属单位" readonly="true" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="长度：" name="长度" readonly="true" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="起点坐标：" name="起点坐标" readonly="true" class="info-item" />
-            <ui:TextField picking-mode="Ignore" label="终点坐标：" name="终点坐标" readonly="true" class="info-item" />
+    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); -unity-font-definition: url(&apos;project://database/Assets/Scenes/ARInspection/userInterface/SourceHanSerifSC-Regular%20SDF.asset?fileID=11400000&amp;guid=d5422eab7c3cd814e94d09ad2ae23d17&amp;type=2#SourceHanSerifSC-Regular SDF&apos;); color: rgb(255, 255, 255); font-size: 30px;">
+        <ui:GroupBox style="top: 39px; position: absolute; left: 24px;">
+            <ui:Toggle label="位置调整" name="isEdit" />
         </ui:GroupBox>
-    </ui:GroupBox>
+        <ui:GroupBox name="GroupBox" class="mainbox" style="display: flex; color: rgb(0, 0, 0);">
+            <ui:GroupBox name="object-info" class="object-info">
+                <ui:TextField picking-mode="Ignore" label="id：" name="id" readonly="true" class="info-item" />
+                <ui:TextField picking-mode="Ignore" label="名称：" name="名称" readonly="true" class="info-item" />
+                <ui:TextField picking-mode="Ignore" label="所属单位：" name="所属单位" readonly="true" class="info-item" />
+                <ui:TextField picking-mode="Ignore" label="长度：" name="长度" readonly="true" class="info-item" />
+                <ui:TextField picking-mode="Ignore" label="起点坐标：" name="起点坐标" readonly="true" class="info-item" />
+                <ui:TextField picking-mode="Ignore" label="终点坐标：" name="终点坐标" readonly="true" class="info-item" />
+            </ui:GroupBox>
+        </ui:GroupBox>
+    </ui:VisualElement>
 </ui:UXML>

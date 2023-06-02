@@ -17,3 +17,7 @@
     min-width: 120px;
 }
 
+.unity-base-field:focus > .unity-base-field__label {
+    color: white;
+}
+
