@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Siccity.GLTFUtility.Converters;
 using UnityEngine;
 using UnityEngine.Scripting;
+using Newtonsoft.Json.Linq;
+using System.Data;
 
 namespace Siccity.GLTFUtility {
 	// https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#node
@@ -28,6 +30,8 @@ namespace Siccity.GLTFUtility {
 		public int? camera;
 		public int? weights;
 
+		public Dictionary<string, string> extras;
+
 		public bool ShouldSerializetranslation() { return translation != Vector3.zero; }
 		public bool ShouldSerializerotation() { return rotation != Quaternion.identity; }
 		public bool ShouldSerializescale() { return scale != Vector3.one; }
@@ -45,7 +49,7 @@ namespace Siccity.GLTFUtility {
 		/// <summary> Set local position, rotation and scale </summary>
 		public void ApplyTRS(Transform transform) {
 			if(matrix!=Matrix4x4.identity)
-				matrix.UnpackTRS(ref translation, ref rotation, ref scale); 
+				matrix.UnpackTRS(ref translation, ref rotation, ref scale);
 			transform.localPosition = translation;
 			transform.localRotation = rotation;
 			transform.localScale = scale;
@@ -75,7 +79,7 @@ namespace Siccity.GLTFUtility {
 
 				Result = new ImportResult[nodes.Count];
 
-				
+
 				// Initialize transforms
 				for (int i = 0; i < Result.Length; i++) {
 					Result[i] = new GLTFNode.ImportResult();
@@ -102,6 +106,11 @@ namespace Siccity.GLTFUtility {
 				for (int i = 0; i < Result.Length; i++) {
 					// Setup mesh
 					if (nodes[i].mesh.HasValue) {
+						// setup box collider
+						Result[i].transform.gameObject.AddComponent<MeshCollider>();
+						Result[i].transform.gameObject.AddComponent<ExtraData>();
+						Result[i].transform.gameObject.GetComponent<ExtraData>().extraData = nodes[i].extras;
+
 						GLTFMesh.ImportResult meshResult = meshTask.Result[nodes[i].mesh.Value];
 						if (meshResult == null) continue;
 
@@ -195,7 +204,11 @@ namespace Siccity.GLTFUtility {
 		public static GameObject GetRoot(this GLTFNode.ImportResult[] nodes) {
 			GLTFNode.ImportResult[] roots = nodes.Where(x => x.IsRoot).ToArray();
 
-			if (roots.Length == 1) return roots[0].transform.gameObject;
+			if (roots.Length == 1)
+			{
+
+				return roots[0].transform.gameObject;
+			}
 			else {
 				GameObject root = new GameObject("Root");
 				for (int i = 0; i < roots.Length; i++) {
