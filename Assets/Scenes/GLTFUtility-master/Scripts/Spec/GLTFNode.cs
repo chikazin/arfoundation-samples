@@ -106,15 +106,16 @@ namespace Siccity.GLTFUtility
 				for (int i = 0; i < Result.Length; i++) {
 					// Setup mesh
 					if (nodes[i].mesh.HasValue) {
-						// setup box collider
-						Result[i].transform.gameObject.AddComponent<MeshCollider>();
-						Result[i].transform.gameObject.AddComponent<ExtraData>();
-						Result[i].transform.gameObject.GetComponent<ExtraData>().extraData = nodes[i].extras;
+						// setup mesh collider
+						MeshCollider meshColliderCompo = Result[i].transform.gameObject.AddComponent<MeshCollider>();
+						ExtraData extraCompo = Result[i].transform.gameObject.AddComponent<ExtraData>();
+						extraCompo.extraData = nodes[i].extras;
 
 						GLTFMesh.ImportResult meshResult = meshTask.Result[nodes[i].mesh.Value];
 						if (meshResult == null) continue;
 
 						Mesh mesh = meshResult.mesh;
+						meshColliderCompo.sharedMesh = mesh;
 						Renderer renderer;
 						if (nodes[i].skin.HasValue) {
 							GLTFSkin.ImportResult skin = skinTask.Result[nodes[i].skin.Value];

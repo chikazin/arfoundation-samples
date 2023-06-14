@@ -8,7 +8,7 @@ public class RetrieveGltfData : MonoBehaviour
     void Start()
     {
         GameObject gb = Importer.LoadFromFile("Assets/Scenes/ARInspection/pipe_brick_monkey.gltf");
-        gb.transform.position = new Vector3(1, 1, 1);
+        gb.transform.position = new Vector3(0, 0, -6);
         var extra = gb.GetComponent<ExtraData>().extraData;
         foreach (var extraData in extra)
         {
