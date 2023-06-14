@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-namespace Siccity.GLTFUtility {
+namespace Siccity.GLTFUtility
+{
 	/// <summary> API used for importing .gltf and .glb files </summary>
 	public static class Importer {
 		public static GameObject LoadFromFile(string filepath, Format format = Format.AUTO) {
@@ -276,6 +276,8 @@ namespace Siccity.GLTFUtility {
 
 				importSettings.extrasProcessor.ProcessExtras(gameObject, animations, gltfObject.extras);
 			}
+			gameObject.AddComponent<ExtraData>();
+			gameObject.GetComponent<ExtraData>().extraData = gltfObject.scenes[0].extras;
 			return gameObject;
 		}
 #endregion

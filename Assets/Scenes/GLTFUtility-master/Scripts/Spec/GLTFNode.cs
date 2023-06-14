@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Siccity.GLTFUtility.Converters;
 using UnityEngine;
 using UnityEngine.Scripting;
-using Newtonsoft.Json.Linq;
 using System.Data;
+using Newtonsoft.Json.Linq;
 
-namespace Siccity.GLTFUtility {
+namespace Siccity.GLTFUtility
+{
 	// https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#node
 	[Preserve] public class GLTFNode {
 #region Serialization
@@ -30,7 +30,7 @@ namespace Siccity.GLTFUtility {
 		public int? camera;
 		public int? weights;
 
-		public Dictionary<string, string> extras;
+		public JObject extras;
 
 		public bool ShouldSerializetranslation() { return translation != Vector3.zero; }
 		public bool ShouldSerializerotation() { return rotation != Quaternion.identity; }
@@ -206,7 +206,6 @@ namespace Siccity.GLTFUtility {
 
 			if (roots.Length == 1)
 			{
-
 				return roots[0].transform.gameObject;
 			}
 			else {
