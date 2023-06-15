@@ -49,10 +49,20 @@
 	],
 	"nodes":[
 		{
+			"extras":{
+				"id":"gx1008611",
+				"dept":"\u6d59\u6c5f\u7701\u57ce\u4e61\u89c4\u5212\u8bbe\u8ba1\u7814\u7a76\u9662",
+				"type":"gx"
+			},
 			"mesh":0,
 			"name":"line-point-shp"
 		},
 		{
+			"extras":{
+				"id":"ht1008612",
+				"dept":"\u6d59\u6c5f\u7701\u57ce\u4e61\u89c4\u5212\u8bbe\u8ba1\u7814\u7a76\u9662",
+				"type":"ht"
+			},
 			"mesh":1,
 			"name":"\u7334\u5934"
 		},

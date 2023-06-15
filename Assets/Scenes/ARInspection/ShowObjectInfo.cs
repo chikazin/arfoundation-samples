@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShowObjectInfo : MonoBehaviour
@@ -75,7 +73,7 @@ public class ShowObjectInfo : MonoBehaviour
         var uiToolkit = GameObject.Find("UIDocument");
         if (uiToolkit.TryGetComponent<RuntimeUI>(out var runtimeUI))
         {
-            runtimeUI.SetId($"{gameObject.name}1008611");
+            runtimeUI.GenerateInfo(gameObject);
         }
     }
 

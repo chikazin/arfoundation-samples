@@ -6,12 +6,8 @@
         </ui:GroupBox>
         <ui:GroupBox name="GroupBox" class="mainbox" style="display: flex; color: rgb(0, 0, 0);">
             <ui:GroupBox name="object-info" class="object-info">
-                <ui:TextField picking-mode="Ignore" label="id：" name="id" readonly="true" class="info-item" />
-                <ui:TextField picking-mode="Ignore" label="名称：" name="名称" readonly="true" class="info-item" />
-                <ui:TextField picking-mode="Ignore" label="所属单位：" name="所属单位" readonly="true" class="info-item" />
-                <ui:TextField picking-mode="Ignore" label="长度：" name="长度" readonly="true" class="info-item" />
-                <ui:TextField picking-mode="Ignore" label="起点坐标：" name="起点坐标" readonly="true" class="info-item" />
-                <ui:TextField picking-mode="Ignore" label="终点坐标：" name="终点坐标" readonly="true" class="info-item" />
+                <ui:TextField picking-mode="Ignore" label="模型名称：" name="obj-name" readonly="true" class="info-item" />
+                <ui:VisualElement name="obj-info-box" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
             </ui:GroupBox>
         </ui:GroupBox>
     </ui:VisualElement>

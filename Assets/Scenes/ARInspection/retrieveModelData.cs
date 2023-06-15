@@ -1,5 +1,4 @@
 using UnityEngine;
-using Newtonsoft.Json.Linq;
 using Siccity.GLTFUtility;
 
 public class RetrieveGltfData : MonoBehaviour
@@ -9,13 +8,6 @@ public class RetrieveGltfData : MonoBehaviour
     {
         GameObject gb = Importer.LoadFromFile("Assets/Scenes/ARInspection/pipe_brick_monkey.gltf");
         gb.transform.position = new Vector3(0, 0, -6);
-        var extra = gb.GetComponent<ExtraData>().extraData;
-        foreach (var extraData in extra)
-        {
-            string key = extraData.Key;
-            JToken val = extraData.Value;
-            Debug.Log($"{key}: {val}");
-        }
     }
 
     // Update is called once per frame
