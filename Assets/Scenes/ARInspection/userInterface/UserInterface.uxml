@@ -4,11 +4,13 @@
         <ui:GroupBox style="top: 39px; position: absolute; left: 24px;">
             <ui:Toggle label="位置调整" name="isEdit" />
         </ui:GroupBox>
-        <ui:GroupBox name="GroupBox" class="mainbox" style="display: flex; color: rgb(0, 0, 0);">
-            <ui:GroupBox name="object-info" class="object-info">
-                <ui:TextField picking-mode="Ignore" label="模型名称：" name="obj-name" readonly="true" class="info-item" />
-                <ui:VisualElement name="obj-info-box" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
-            </ui:GroupBox>
+        <ui:GroupBox name="GroupBox" class="mainbox" style="display: flex; color: rgb(0, 0, 0); max-height: initial; min-height: auto;">
+            <ui:ScrollView style="max-height: 900px; min-height: auto;">
+                <ui:GroupBox name="object-info" class="object-info">
+                    <ui:TextField picking-mode="Ignore" label="模型名称：" name="obj-name" readonly="true" class="info-item" />
+                    <ui:VisualElement name="obj-info-box" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);" />
+                </ui:GroupBox>
+            </ui:ScrollView>
         </ui:GroupBox>
     </ui:VisualElement>
 </ui:UXML>

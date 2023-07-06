@@ -10,7 +10,7 @@ Packages/packages-lock.json
 
 # Visual Studio 2015 cache directory
 /.vs/
-.vscode
+# .vscode
 
 # Ignore manually added packages
 com.*
