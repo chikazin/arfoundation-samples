@@ -135,6 +135,15 @@ namespace Siccity.GLTFUtility
 		}
 #endregion
 
+		public static GameObject ImportGLTFFromText(string json) {
+			// string json = File.ReadAllText(filepath);
+
+			// Parse json
+			GLTFObject gltfObject = JsonConvert.DeserializeObject<GLTFObject>(json);
+			AnimationClip[] animations;
+			return gltfObject.LoadInternal(null, null, 0, new ImportSettings(), out animations);
+		}
+
 		private static GameObject ImportGLTF(string filepath, ImportSettings importSettings, out AnimationClip[] animations) {
 			string json = File.ReadAllText(filepath);
 
