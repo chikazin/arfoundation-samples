@@ -13,10 +13,23 @@ public class RuntimeUI : MonoBehaviour
     // 模型节点信息box
     private VisualElement objInfoBox;
 
+    // 鼠标是否在信息框上
+    public bool isMouseInInfoBox;
+
+    void MouseEnterEventCallback(MouseEnterEvent evt){
+        this.isMouseInInfoBox = true;
+    }
+    void MouseLeaveEventCallback(MouseLeaveEvent evt){
+        this.isMouseInInfoBox = false;
+    }
+
+
     void Start()
     {
         document = GetComponent<UIDocument>();
         groupBox = document.rootVisualElement.Q("GroupBox") as GroupBox;
+        groupBox.RegisterCallback<MouseEnterEvent>(MouseEnterEventCallback);
+        groupBox.RegisterCallback<MouseLeaveEvent>(MouseLeaveEventCallback);
         isEditToggle = document.rootVisualElement.Q("isEdit") as Toggle;
         objInfoBox = document.rootVisualElement.Q("obj-info-box") as VisualElement;
         HideInfobox();

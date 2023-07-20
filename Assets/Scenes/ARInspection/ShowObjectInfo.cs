@@ -4,10 +4,12 @@ public class ShowObjectInfo : MonoBehaviour
 {
     // Start is called before the first frame update
     private GameObject lastClickObj;
+    private RuntimeUI runtimeUI;
 
     void Start()
     {
-
+        var uiToolkit = GameObject.Find("UIDocument");
+        this.runtimeUI = uiToolkit.GetComponent<RuntimeUI>();
     }
 
     // Update is called once per frame
@@ -32,12 +34,13 @@ public class ShowObjectInfo : MonoBehaviour
             }
             else
             {
-                // 隐藏物体信息框
-                HideObjInfo();
-                // 隐藏上一次点击的GameObject（如果有）的Outline
-                HideOutline();
-
-
+                // 鼠标不在UI上时才隐藏
+                if(!this.runtimeUI.isMouseInInfoBox){
+                    // 隐藏物体信息框
+                    HideObjInfo();
+                    // 隐藏上一次点击的GameObject（如果有）的Outline
+                    HideOutline();
+                }
             }
         }
     }
@@ -70,19 +73,11 @@ public class ShowObjectInfo : MonoBehaviour
 
     void ShowObjInfo(GameObject gameObject)
     {
-        var uiToolkit = GameObject.Find("UIDocument");
-        if (uiToolkit.TryGetComponent<RuntimeUI>(out var runtimeUI))
-        {
-            runtimeUI.GenerateInfo(gameObject);
-        }
+        this.runtimeUI.GenerateInfo(gameObject);
     }
 
     void HideObjInfo()
     {
-        var uiToolkit = GameObject.Find("UIDocument");
-        if (uiToolkit.TryGetComponent<RuntimeUI>(out var runtimeUI))
-        {
-            runtimeUI.HideInfobox();
-        }
+        this.runtimeUI.HideInfobox();
     }
 }
