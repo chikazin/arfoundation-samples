@@ -72,10 +72,14 @@ public class RuntimeUI : MonoBehaviour
             var value = item.Value;
             var textField = new TextField
             {
-                label = key,
+                label = $"{key}：",
                 value = value.ToString()
             };
             textField.AddToClassList("info-item");
+            textField.isReadOnly = true;
+            textField.focusable = false;
+            textField.selectAllOnFocus = false;
+            textField.selectAllOnMouseUp = false;
             objInfoBox.Add(textField);
         }
     }
